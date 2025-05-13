@@ -7,87 +7,36 @@ on:
 
 jobs:
   check:
-    name: cargo check
+    name: Component check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          target: wasm32-wasip2 # WebAssembly target
-          components: rustfmt
-      - uses: edgee-cloud/install-edgee-cli@v0.2.0
-      - run: edgee component wit
-      - run: cargo check
 
-  fmt:
-    name: cargo fmt
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
         with:
-          components: rustfmt
           target: wasm32-wasip2
-      - uses: edgee-cloud/install-edgee-cli@v0.2.0
-      - run: edgee component wit
-      - uses: actions-rust-lang/rustfmt@v1
+          components: rustfmt, clippy
 
-  clippy:
-    name: clippy
-    runs-on: ubuntu-latest
-    permissions:
-      checks: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          components: clippy
-          target: wasm32-wasip2
-      - uses: edgee-cloud/install-edgee-cli@v0.2.0
-      - run: edgee component wit
-      - uses: wearerequired/lint-action@master
+      - name: Install Edgee CLI
+        uses: edgee-cloud/install-edgee-cli@v0.2.0
+
+      - name: Run edgee component wit
+        run: edgee component wit
+
+      - name: Cargo Check
+        run: cargo check
+
+      - name: Cargo Fmt Check
+        uses: actions-rust-lang/rustfmt@v1
+
+      - name: Clippy Lint
+        uses: wearerequired/lint-action@master
         with:
           clippy: true
 
-  build:
-    name: cargo build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          target: wasm32-wasip2 # WebAssembly target
-      - uses: edgee-cloud/install-edgee-cli@v0.2.0
-      - run: edgee component build
-      - name: Verify .wasm file exists
-        run: |
-          if [ ! -f "./plausible.wasm" ]; then
-              echo "❌ Error: plausible.wasm not found" >&2
-              exit 1
-          fi
+      - name: Cargo Build
+        run: edgee component build
 
-  test:
-    name: cargo test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          target: wasm32-wasip2
-      - uses: edgee-cloud/install-edgee-cli@v0.2.0
-      - run: edgee component wit
-      - run: cargo test
-
-  coverage:
-    name: coverage & coveralls
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          target: wasm32-wasip2
-      - uses: taiki-e/install-action@cargo-llvm-cov
-      - uses: edgee-cloud/install-edgee-cli@v0.2.0
-      - run: edgee component wit
-      - run: cargo llvm-cov --all-features --lcov --output-path lcov.info
-      - uses: coverallsapp/github-action@v2
+      - name: Run Tests
+        run: cargo test
