@@ -1,5 +1,5 @@
 [package]
-name = "example-rust-component"
+name = "axeptio-consent-mapping"
 version = "0.1.0"
 edition = "2021"
 
@@ -14,4 +14,3 @@ wit-bindgen = "0.42.1"
 
 [dev-dependencies]
 pretty_assertions = "1.4.1"
-uuid = { version = "1.10.0", features = ["v4"] }
