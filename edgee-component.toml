@@ -6,7 +6,7 @@ version = "1.0.0"
 
 category = "consent-management"
 subcategory = "consent-mapping"
-description = "Example Rust component for consent-mapping"
+description = "Integrate user consent managed by Axeptio with your Edgee components"
 documentation = "https://github.com/edgee-cloud/axeptio-component"
 repository = "https://github.com/edgee-cloud/axeptio-component"
 language = "Rust"
