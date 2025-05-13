@@ -6,8 +6,11 @@ version = "1.0.0"
 
 category = "consent-management"
 subcategory = "consent-mapping"
-description = "Integrate user consent managed by Axeptio with your Edgee components"
-documentation = "https://github.com/edgee-cloud/axeptio-component"
+description = '''
+Axeptio Consent Mapping lets you forward the user consent managed by Axeptio CMP with all your other components.
+You no longer need to specify your users' consent via the sdk or Edgee data layer, everything is done automatically.
+'''
+documentation = "https://www.edgee.cloud/docs/components/cmp/axeptio-consent-mapping"
 repository = "https://github.com/edgee-cloud/axeptio-component"
 language = "Rust"
 wit-version = "1.0.0"
