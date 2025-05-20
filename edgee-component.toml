@@ -2,7 +2,7 @@ manifest-version = 1
 
 [component]
 name = "axeptio-consent-mapping"
-version = "1.1.0"
+version = "1.1.1"
 
 category = "consent-management"
 subcategory = "consent-mapping"
